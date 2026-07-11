@@ -13,10 +13,78 @@
 .cartoon-avatar {
   width: 90%;
   height: 90%;
-  filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+  filter: drop-shadow(0 20px 30px rgba(0,0,0,0.6));
   transition: transform 0.3s ease;
 }
 
 .avatar-container:hover .cartoon-avatar {
   transform: scale(1.05);
+}
+
+.waving-hand {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.waving-hand.hidden {
+  opacity: 0;
+  transform: translate(160px, 170px);
+}
+
+.waving-hand.visible {
+  opacity: 1;
+  transform: translate(160px, 130px);
+}
+
+.waving-hand.visible .hand-wrapper {
+  animation: wave 1.5s ease-in-out;
+  transform-origin: 0px 10px;
+}
+
+@keyframes wave {
+  0% { transform: rotate(0deg); }
+  20% { transform: rotate(-25deg); }
+  40% { transform: rotate(20deg); }
+  60% { transform: rotate(-15deg); }
+  80% { transform: rotate(10deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* Breathing & Idle Animations */
+.breathing-torso {
+  animation: breatheTorso 4s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+
+.breathing-head {
+  animation: breatheHead 4s ease-in-out infinite;
+}
+
+.tie-sway {
+  animation: tieSway 4s ease-in-out infinite;
+  transform-origin: 100px 145px;
+}
+
+@keyframes breatheTorso {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02, 1.03); }
+}
+
+@keyframes breatheHead {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes tieSway {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(8deg); }
+}
+
+.ui-ring-bg {
+  animation: spinUI 30s linear infinite;
+  transform-origin: 100px 100px;
+}
+
+@keyframes spinUI {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

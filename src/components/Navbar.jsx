@@ -11,6 +11,7 @@ function Navbar() {
           <li><a href="#projects">Projects</a></li>
           <li><a href="#experience">Experience</a></li>
           <li><a href="#skills">Skills</a></li>
+          <li><a href="/resume.pdf" download="Jenil_Patel_Resume.pdf" className="btn btn-outline btn-sm">Resume</a></li>
           <li><a href="#contact" className="btn btn-primary btn-sm">Contact Me</a></li>
         </ul>
       </div>
