@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
 import './Contact.css';
 
+
 function Contact() {
   const [status, setStatus] = useState("");
-
+  const [isLoading, setIsLoading] = useState(false);
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     setStatus("Sending...");
 
     // IMPORTANT: Get your free access key from https://web3forms.com/
     // and replace "YOUR_ACCESS_KEY_HERE" below
     const formData = new FormData(e.target);
-    formData.append("access_key", "1c7b8870-dfc0-41fa-a575-f2b5e718d14c");
+    formData.append("access_key",process.env.REACT_APP_WEB3FORMS_KEY);
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
@@ -26,14 +29,19 @@ function Contact() {
         e.target.reset();
         setTimeout(() => setStatus(""), 4000);
       } else {
-        setStatus("Failed to send message.");
-        setTimeout(() => setStatus(""), 4000);
-      }
-    } catch (error) {
-      setStatus("An error occurred. Please try again.");
-      setTimeout(() => setStatus(""), 4000);
-    }
-  };
+  setStatus(`✗ ${data.message || "Failed to send message."}`);
+  setTimeout(() => {
+    setStatus("");
+    setIsLoading(false);
+  }, 4000);
+}
+  } catch (error) {
+  setStatus("✗ An error occurred. Please try again.");
+  setTimeout(() => {
+    setStatus("");
+    setIsLoading(false);
+  }, 4000);
+}};
 
   return (
     <section className="section contact" id="contact">
@@ -54,10 +62,10 @@ function Contact() {
             <div className="form-group">
               <textarea name="message" placeholder="Your Message" rows="5" required className="form-input"></textarea>
             </div>
-            <button type="submit" className="btn btn-primary contact-submit" disabled={status === "Sending..."}>
-              {status === "Sending..." ? "Sending..." : "Send Message"}
-            </button>
-            {status && <p className="contact-text" style={{ marginTop: '1rem', color: 'var(--accent-color)', fontWeight: 'bold' }}>{status}</p>}
+            <button type="submit" className="btn btn-primary contact-submit" disabled={isLoading}>
+  {isLoading ? "Sending..." : "Send Message"}
+</button>
+            {status && <p className="contact-text" style={{ marginTop: '1rem', color: status.includes('✓') ? '#4CAF50': 'var(--accent-color)', fontWeight: 'bold' }}>{status}</p>}
           </form>
 
           <div className="social-links">
